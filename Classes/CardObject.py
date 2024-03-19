@@ -1,6 +1,6 @@
 import random
 from streamlit_card import card
-from os import *
+from startfile import startfile
 
 class CardObj():
   def __init__(self, title, ep, image, path):
@@ -10,7 +10,7 @@ class CardObj():
     self.path = path
 
   def start(self):
-    open(self.path)
+    startfile(self.path)
     print("AVVIO FILE " + self.path)
 
   def display(self):

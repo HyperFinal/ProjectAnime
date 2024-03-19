@@ -4,7 +4,7 @@ import animeworld as aw
 import os
 from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
-from os import *
+from startfile import startfile
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
@@ -99,14 +99,14 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         print('finish')
         st.rerun()
     episodes = anime.getEpisodes([start])
+    i = st.session_state['i']
     for ep in episodes:
         if(i < 4):
-            i = st.session_state['i']
-            print("entrato if" + i)
+            print(fr"entrato if i: {i}")
         else:
             i = 0
             st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image, path)
-            print("entrato else" + i)
+            print(fr"entrato else i: {i}")
         print(i)
         print(f"Downloading episode {ep.number}.")
         name_file = fr"{anime.getName()}{start}"
@@ -229,7 +229,7 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
 
 def startFunc(path, name):
     print("PATH BUTTON INSIDE START METHOD:" + path)
-    open(path)
+    startfile(path)
     print("AVVIATO FILE " + path)
     return fr'Avviato file {name}'
 
