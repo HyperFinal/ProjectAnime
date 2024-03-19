@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_card import card
-from os import open
+from os import *
 import random
 
 class ButtonObj():

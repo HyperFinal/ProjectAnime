@@ -1,6 +1,6 @@
 import random
 from streamlit_card import card
-from os import open
+from os import *
 
 class CardObj():
   def __init__(self, title, ep, image, path):
