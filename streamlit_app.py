@@ -4,7 +4,7 @@ import animeworld as aw
 import os
 from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
-from os import startfile
+from os import open
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
@@ -229,7 +229,7 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
 
 def startFunc(path, name):
     print("PATH BUTTON INSIDE START METHOD:" + path)
-    startfile(path)
+    open(path)
     print("AVVIATO FILE " + path)
     return fr'Avviato file {name}'
 
