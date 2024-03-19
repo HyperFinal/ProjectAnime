@@ -1,12 +1,10 @@
 import streamlit as st
-import json
 from streamlit_card import card
 import animeworld as aw
 import os
 from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
 from os import startfile
-from streamlit_carousel import carousel
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
