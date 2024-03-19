@@ -6,6 +6,7 @@ from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
 from startfile import startfile
 from pathlib import Path
+from git import Repo
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
@@ -20,10 +21,14 @@ if 'i' not in st.session_state:
 if 'arrayB' not in st.session_state:
     st.session_state['arrayB'] = []
 
-
+PATH_OF_GIT_REPO = 'D:/INFO/project_anime_server/.git' 
+COMMIT_MESSAGE = 'added EP'
 
 def main():
     ArrayButtons = st.session_state['arrayB']
+    
+
+
     print(ArrayButtons)
     ##HEADER
     with st.container():
@@ -113,6 +118,7 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         name_file = fr"{anime.getName()}{start}"
         ep.download(name_file, "AnimeDownloads") 
         print(f"Download completed.")
+        git_push()
         path = fr"AnimeDownloads/{anime.getName()}{start}.mp4"
         text = fr"Play {anime.getName()} Ep.{start}"
         nameF = fr"{anime.getName()}{start}"
@@ -227,11 +233,23 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
     getEp(int(st.session_state['start']), int(st.session_state['end']), Anime, anime_info[0]['image'],cardCol1, cardCol2, cardCol3, cardcol4, arrayB)
 
 
+def git_push():
+    try:
+        repo = Repo(PATH_OF_GIT_REPO)
+        repo.git.add(update=True)
+        repo.index.commit(COMMIT_MESSAGE)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except:
+        print('Some error occured while pushing the code')    
+
 
 def startFunc(path, name):
     print("PATH BUTTON INSIDE START METHOD:" + path)
     startfile(Path.joinpath(Path.cwd(), path))
     print("AVVIATO FILE " + path)
     return fr'Avviato file {name}'
+
+
 
 main()
