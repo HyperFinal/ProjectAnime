@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_card import card
-from os import startfile
+from os import open
 import random
 
 class ButtonObj():
@@ -12,7 +12,7 @@ class ButtonObj():
 
   def start(self):
     print("PATH BUTTON INSIDE START METHOD:" + self.path)
-    startfile(self.path)
+    open(self.path)
     print("AVVIATO FILE " + self.path)
   
   def getText(self):
