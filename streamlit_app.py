@@ -5,6 +5,7 @@ import os
 from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
 from startfile import startfile
+from pathlib import Path
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
@@ -110,9 +111,9 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         print(i)
         print(f"Downloading episode {ep.number}.")
         name_file = fr"{anime.getName()}{start}"
-        ep.download(name_file, "C:/ProjectAnimeDownloads") 
+        ep.download(name_file, "AnimeDownloads") 
         print(f"Download completed.")
-        path = fr"C:/ProjectAnimeDownloads/{anime.getName()}{start}.mp4"
+        path = fr"AnimeDownloads/{anime.getName()}{start}.mp4"
         text = fr"Play {anime.getName()} Ep.{start}"
         nameF = fr"{anime.getName()}{start}"
         Button = ButtonObj(text, path, nameF)
@@ -229,7 +230,7 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
 
 def startFunc(path, name):
     print("PATH BUTTON INSIDE START METHOD:" + path)
-    startfile(path)
+    startfile(Path.joinpath(Path.cwd(), path))
     print("AVVIATO FILE " + path)
     return fr'Avviato file {name}'
 

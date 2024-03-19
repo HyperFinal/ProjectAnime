@@ -1,9 +1,9 @@
 import streamlit as st
-
+import os
 from Classes.CardObject import CardObj
 from os import startfile
 from streamlit_card import card
-
+from pathlib import Path
 
 
 
@@ -12,8 +12,13 @@ i=0
 k = 1
 
 def start_capture():
-    startfile("C:/ProjectAnimeDownloads/Sampei (ITA)1.mp4")
+    import os
+    
+    print(Path.cwd())
+    print(Path.joinpath(Path.cwd(),'AnimeDownloads/Sampei (ITA)1.MP4'))
+    startfile(Path.joinpath(Path.cwd(),'AnimeDownloads/Sampei (ITA)1.MP4'))
     print("START1")
+
     return "Avviato"
                   
 
