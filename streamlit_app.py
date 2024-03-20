@@ -6,7 +6,6 @@ from Classes.CardObject import CardObj
 from Classes.ButtonObject import ButtonObj
 from startfile import startfile
 from pathlib import Path
-from git import Repo
 st.set_page_config(page_title="ProjectAnime", layout="wide")
 
 
@@ -20,9 +19,11 @@ if 'i' not in st.session_state:
     st.session_state['i'] = 0
 if 'arrayB' not in st.session_state:
     st.session_state['arrayB'] = []
+if "sliderDA" not in st.session_state:
+    st.session_state.sliderDA = 0
+if "sliderA" not in st.session_state:
+    st.session_state.sliderA = 0
 
-PATH_OF_GIT_REPO = 'D:/INFO/project_anime_server/.git' 
-COMMIT_MESSAGE = 'added EP'
 
 def main():
     ArrayButtons = st.session_state['arrayB']
@@ -38,22 +39,13 @@ def main():
     ##FORM
     st.markdown("<style> button[kind = 'secondary']{display: block; margin-left: auto; margin-right: auto}</style>", unsafe_allow_html=True)
     cardCol1, cardCol2, cardCol3, cardCol4 = st._bottom.columns(4)
-    col1, col2, col3 = st.columns((1,0.1,0.1))
+    col1, col2, col3 = st.columns((0.3,0.2,0.2))
     with col1:
             name = st.text_input(
-                "Title",
+                "Title"
             )
             st.session_state['name'] = name
-    with col2:
-            start = st.text_input(
-                "Da",
-            )
-            st.session_state['start'] = start
-    with col3:
-            end= st.text_input(
-                "A",
-            )
-            st.session_state['end'] = end
+            EpSlider(col2,col3)
     button = st.button("Invia", type="primary")
     if button: 
         getAnimeInfo(cardCol1, cardCol2, cardCol3, cardCol4, ArrayButtons)
@@ -98,7 +90,6 @@ def main():
     if st.button("Refresh"):
             st.write(st.rerun())
     
-    
 
 def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3, cardcol4, arrayB: list):
     if(start > end):
@@ -116,9 +107,8 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         print(i)
         print(f"Downloading episode {ep.number}.")
         name_file = fr"{anime.getName()}{start}"
-        ep.download(name_file, "AnimeDownloads") 
+        ep.download(name_file, "AnimeDownloads")
         print(f"Download completed.")
-        git_push()
         path = fr"AnimeDownloads/{anime.getName()}{start}.mp4"
         text = fr"Play {anime.getName()} Ep.{start}"
         nameF = fr"{anime.getName()}{start}"
@@ -223,6 +213,7 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
     if(anime_info == []):
         st.write("Anime con quel nome non esistente")
         return
+    print(anime_info)
     Anime = aw.Anime(anime_info[0]['link'])
     directory = "C:/ProjectAnimeDownloads"
     if not os.path.exists(directory):
@@ -233,23 +224,34 @@ def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
     getEp(int(st.session_state['start']), int(st.session_state['end']), Anime, anime_info[0]['image'],cardCol1, cardCol2, cardCol3, cardcol4, arrayB)
 
 
-def git_push():
-    try:
-        repo = Repo(PATH_OF_GIT_REPO)
-        repo.git.add(update=True)
-        repo.index.commit(COMMIT_MESSAGE)
-        origin = repo.remote(name='origin')
-        origin.push()
-    except:
-        print('Some error occured while pushing the code')    
+def EpSlider(col2, col3):
+    if(st.session_state['name'] != 'value' and st.session_state['name'] != ''):
+        print('Valore di name e' + st.session_state['name'])
+        anime_info = aw.find(st.session_state['name'])
+        max_episodes = anime_info[0]['episodes']
+        with col2.container():
+            st.slider('DA', 0,max_episodes, 0, 1, key='sliderDA', on_change=setStart())
+        with col3.container():
+            st.slider('A', 0,max_episodes, 0, 1, key='sliderA', on_change=setEnd())
+    else:
+        print('ELSE valore di name e value')
+    return
 
-
+ 
 def startFunc(path, name):
     print("PATH BUTTON INSIDE START METHOD:" + path)
     startfile(Path.joinpath(Path.cwd(), path))
-    print("AVVIATO FILE " + path)
+    ##print("AVVIATO FILE " + path)
     return fr'Avviato file {name}'
 
+def setStart():
+    st.session_state['start'] = st.session_state.sliderDA
+    print("START: " + str(st.session_state['start']))
+    return
 
+def setEnd():
+    st.session_state['end'] = st.session_state.sliderA
+    ##print("END: " + str(st.session_state['end']))
+    return
 
 main()
