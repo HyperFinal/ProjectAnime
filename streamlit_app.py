@@ -27,7 +27,9 @@ if "sliderA" not in st.session_state:
 
 def main():
     ArrayButtons = st.session_state['arrayB']
-    
+    st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div > div[role="slider"]{
+    background-color: rgb(14, 38, 74); box-shadow: rgb(14 38 74 / 20%) 0px 0px 0px 0.2rem;} </style>''', unsafe_allow_html = True)
+
 
 
     print(ArrayButtons)
@@ -107,7 +109,8 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         print(i)
         print(f"Downloading episode {ep.number}.")
         name_file = fr"{anime.getName()}{start}"
-        ep.download(name_file, "AnimeDownloads")
+        if(i == 0):
+            ep.download(name_file, "AnimeDownloads")
         print(f"Download completed.")
         path = fr"AnimeDownloads/{anime.getName()}{start}.mp4"
         text = fr"Play {anime.getName()} Ep.{start}"
