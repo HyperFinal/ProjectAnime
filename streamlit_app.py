@@ -104,13 +104,12 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
             print(fr"entrato if i: {i}")
         else:
             i = 0
-            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image, path)
+            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image)
             print(fr"entrato else i: {i}")
         print(i)
         print(f"Downloading episode {ep.number}.")
         name_file = fr"{anime.getName()}{start}"
-        if(i == 0):
-            ep.download(name_file, "AnimeDownloads")
+        ep.download(name_file, "AnimeDownloads")
         print(f"Download completed.")
         path = fr"AnimeDownloads/{anime.getName()}{start}.mp4"
         text = fr"Play {anime.getName()} Ep.{start}"
@@ -120,12 +119,12 @@ def getEp(start: int,end: int,anime:aw.Anime,image,cardCol1, cardCol2, cardCol3,
         st.session_state['arrayB'] = arrayB
         print("INSERITO IN ARRAY B")
         if f'{i}' not in st.session_state:
-            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image, path)
+            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image)
             print("ENTRATO IF NOT")
             print(f'{i}')
             print(st.session_state[f'{i}'])
         else:
-            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image, path)
+            st.session_state[f'{i}'] = CardObj(anime.getName(), "Ep." + str(start), image)
             print("ENTRATO ELSE NOT")
             print(f'{i}')
             print(st.session_state[f'{i}']) 
