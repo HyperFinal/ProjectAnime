@@ -36,8 +36,6 @@ if __name__ == "__main__":
         st.session_state['arrayB'] = []
     if "sliderA" not in st.session_state:
         st.session_state.sliderA = 0 
-    else:
-        st.session_state.sliderA = 0
     if "sliderDA" not in st.session_state:
         st.session_state.sliderDA = 0
     else: ## ELSE FOR SET THE SLIDER 'TO' WITH THE VALUE OF SLIDER 'FROM' ON EACH CHANGE

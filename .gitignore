@@ -84,3 +84,5 @@ pythonScripts/Scripts/pyi-grab_version.exe
 pythonScripts/Scripts/pyi-makespec.exe
 pythonScripts/Scripts/pyi-set_version.exe
 pythonScripts/Scripts/pyinstaller.exe
+
+.venv

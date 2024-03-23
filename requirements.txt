@@ -1,4 +1,4 @@
 streamlit_card
 animeworld
 universal-startfile
-streamlit
+streamlit==1.32.2
