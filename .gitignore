@@ -72,3 +72,15 @@ pythonScripts/Scripts/futurize.exe
 pythonScripts/Scripts/pasteurize.exe
 pythonScripts/Scripts/py-unused-deps.exe
 pythonScripts/Lib/site-packages/pandas/
+pythonScripts/Lib/site-packages/PyInstaller/
+pythonScripts/Lib/site-packages/auto_py_to_exe-2.43.1.dist-info/
+pythonScripts/Lib/site-packages/auto_py_to_exe/
+pythonScripts/Lib/site-packages/pyinstaller-6.5.0.dist-info/
+pythonScripts/Scripts/auto-py-to-exe.exe
+pythonScripts/Scripts/autopytoexe.exe
+pythonScripts/Scripts/pyi-archive_viewer.exe
+pythonScripts/Scripts/pyi-bindepend.exe
+pythonScripts/Scripts/pyi-grab_version.exe
+pythonScripts/Scripts/pyi-makespec.exe
+pythonScripts/Scripts/pyi-set_version.exe
+pythonScripts/Scripts/pyinstaller.exe
