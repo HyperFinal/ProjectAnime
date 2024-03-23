@@ -85,4 +85,5 @@ pythonScripts/Scripts/pyi-makespec.exe
 pythonScripts/Scripts/pyi-set_version.exe
 pythonScripts/Scripts/pyinstaller.exe
 
-.venv
+run.spec
+build/
