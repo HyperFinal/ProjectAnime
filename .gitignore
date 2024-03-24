@@ -1,5 +1,4 @@
 test.py
-run.py
 WhatToDoList.txt
 
 *.rar
@@ -87,3 +86,5 @@ pythonScripts/Scripts/pyinstaller.exe
 
 run.spec
 build/
+
+*.exe
