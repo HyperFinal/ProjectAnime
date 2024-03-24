@@ -1,6 +1,6 @@
 test.py
 WhatToDoList.txt
-
+run.pyw
 *.rar
 
 pythonScripts/Lib/site-packages/Crypto/
@@ -86,5 +86,3 @@ pythonScripts/Scripts/pyinstaller.exe
 
 run.spec
 build/
-
-*.exe
