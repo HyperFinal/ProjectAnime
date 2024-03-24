@@ -291,8 +291,8 @@ if __name__ == "__main__":
     ## FUNCTION FOR CREATE SLIDERS FOR EPISODE SELECTION
     def EpSlider(col1):
         if(st.session_state['name'] != 'value' and st.session_state['name'] != ''):
-            print('Valore di name e' + st.session_state['name'])   
-            anime_info = aw.find(st.session_state['name'])
+            print('Valore di name e ' + st.session_state['name'])   
+            anime_info = aw.find(str(st.session_state['name']))
             if(anime_info == []):
                 st.write("Anime con quel nome non esistente")
                 return
