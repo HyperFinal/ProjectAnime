@@ -85,4 +85,5 @@ pythonScripts/Scripts/pyinstaller.exe
 
 run.spec
 build/
+Runners/
 *.pyw
