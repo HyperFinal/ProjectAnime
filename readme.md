@@ -5,6 +5,6 @@ Permette di scaricare anime dal sito AnimeWorld
 
 **HOW TO USE IT**
 
-1) Install python on your machine
+1 - Install python on your machine
 
-2) Download zip file and then run first installOneTime.exe then run.exe
+2 - Download zip file and then run first installOneTime.exe then run.exe
