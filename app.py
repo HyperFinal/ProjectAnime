@@ -40,7 +40,11 @@ if __name__ == "__main__":
         st.session_state.sliderDA = 0
     else: ## ELSE FOR SET THE SLIDER 'TO' WITH THE VALUE OF SLIDER 'FROM' ON EACH CHANGE
         if(st.session_state.sliderDA != 0):
-            st.session_state.sliderA = st.session_state.sliderDA + 1
+            if(st.session_state.sliderA < st.session_state.sliderDA):
+                if(st.session_state.sliderDA < st.session_state.maxEp):
+                    st.session_state.sliderA = st.session_state.sliderDA + 1
+                else:
+                    st.session_state.sliderA = st.session_state.sliderDA
         if(st.session_state.sliderDA == 0):
             st.session_state.sliderA = 0
     if "counter" not in st.session_state:
@@ -116,6 +120,7 @@ if __name__ == "__main__":
                 text = st.session_state['B0'].getText()
                 print(text)
                 if st.button(fr'{text}'):
+                    print("entrato primo button clicked")
                     st.write(startFunc(st.session_state['B0'].getPath(), st.session_state['B0'].getName()))
         with cardCol2:
             if '1' in  st.session_state:
@@ -152,6 +157,8 @@ if __name__ == "__main__":
             print('finish')
             st.rerun()
         episodes = _anime.getEpisodes([start]) 
+        print("Start" + str(start))
+        print("END" + str(end))
         for ep in episodes:
             i = st.session_state['i']
             if(i < 4):
@@ -194,8 +201,6 @@ if __name__ == "__main__":
                         textB = st.session_state[f'B{i}'].getText()
                         print(textB)
                         if st.button(fr'{textB}'):
-                            st.write(startFunc(st.session_state[f'B{i}'].getPath(), st.session_state[f'B{i}'].getName()))
-                        else:
                             st.write(startFunc(st.session_state[f'B{i}'].getPath(), st.session_state[f'B{i}'].getName()))
                         
                         print("ENTRATO IF1 NOT BUTTON")
@@ -272,6 +277,7 @@ if __name__ == "__main__":
         
     ## FUNCTION TO GET INFO ABOUT THE ANIME LIKE LINK, IMAGE ETC
     def getAnimeInfo(cardCol1, cardCol2, cardCol3, cardcol4, arrayB):
+        print('test')
         anime_info = aw.find(st.session_state['name'])
         if(anime_info == []):
             st.write("Anime con quel nome non esistente")
@@ -292,31 +298,35 @@ if __name__ == "__main__":
     def EpSlider(col1):
         if(st.session_state['name'] != 'value' and st.session_state['name'] != ''):
             print('Valore di name e ' + st.session_state['name'])   
-            anime_info = aw.find(str(st.session_state['name']))
+            anime_info = aw.find(st.session_state['name'])
+            print('FUNZIONE ANIMEWORLD RITORNO: ' + str(anime_info))
             if(anime_info == []):
                 st.write("Anime con quel nome non esistente")
                 return
+            print("EPISODTI MASSIMI ANIME: " + str(anime_info[0]['episodes']))
             max_episodes = anime_info[0]['episodes']
-            
+            max_episodes = int(max_episodes)
+            if "maxEp" not in st.session_state:
+                st.session_state.maxEp = max_episodes
+            print("EPISODI MASSIMI APP.PY " + str(anime_info[0]['episodes']))
             with col1.container():
-                st.slider('DA',0,max_episodes, step=1, key='sliderDA', on_change=setStart())
+                st.slider('DA', 0, max_episodes, None, 1, None, 'sliderDA', None, on_change= setStart())
             with col1.container():
-                st.slider('A', 0,max_episodes, step=1,key='sliderA', on_change=setEnd())
-                
+                st.slider('A', 0, max_episodes, step=1, key='sliderA', on_change=setEnd())
         else:
             print('ELSE valore di name e value')
         return
 
-    ## FUNCTION THAT BUTTONS CALLS TO START ANIME MP4
+    ## FUNCTION THAT BUTTONS CALLS TO START ANIME MP4 
     def startFunc(path, name):
         print("PATH BUTTON INSIDE START METHOD:" + path)
+        print("AVVIATO FILE " + path)
         startfile(Path.joinpath(Path.cwd(), path))
-        ##print("AVVIATO FILE " + path)
         return fr'Avviato file {name}'
+   
 
     ## FUNCTION THAT SET THE EPISODE FROM WHERE START TO DOWNLOAD (RETRIVE FROM THE SLIDER)
     def setStart():
-        
         st.session_state['start'] = st.session_state.sliderDA
         print("START: " + str(st.session_state['start']))
         return
@@ -324,13 +334,9 @@ if __name__ == "__main__":
     ## FUNCTION THAT SET THE EPISODE FROM WHERE END TO DOWNLOAD (RETRIVE FROM THE SLIDER)
     def setEnd():
         st.session_state['end'] = st.session_state.sliderA
-        ##print("END: " + str(st.session_state['end']))
+        print("END: " + str(st.session_state['end']))
         return
     
-    
-
-    
-
 
         
     main()

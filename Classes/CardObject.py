@@ -11,7 +11,7 @@ class CardObj():
   def display(self):
     random_number = random.randint(0,10000000)
     card(self.title, self.ep, self.image, key=random_number)
-    print("test")
-    return True
+    print("card displayed")
+
   
   

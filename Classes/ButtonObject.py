@@ -9,12 +9,7 @@ class ButtonObj():
     self.text = text
     self.name = nameF
     print("PATH BUTTON INSIDE BUTTON OBJ: " + self.path)
-
-  def start(self):
-    print("PATH BUTTON INSIDE START METHOD:" + self.path)
-    startfile(self.path)
-    print("AVVIATO FILE " + self.path)
-  
+    
   def getText(self):
       return self.text
   def getName(self):
@@ -28,5 +23,5 @@ class ButtonObj():
   def display(self):
     st.button(self.text, key=self.getKey())
     print("PATH B: " + self.getPath())
-    return True
+
 
