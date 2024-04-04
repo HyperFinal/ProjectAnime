@@ -1,0 +1,4 @@
+streamlit_card
+awHyper==1.0.0   
+universal-startfile
+streamlit==1.32.2
