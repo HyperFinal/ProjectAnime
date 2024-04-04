@@ -87,3 +87,5 @@ run.spec
 build/
 Runners/
 *.pyw
+AnimeWorldHyper/
+AnimeDownloads/

@@ -21,11 +21,36 @@ def getArrayCards():
     return cards
 
 
+## FUNCTION TO CREATE LAST SEEN ANIME FOR FAST SEARCH
+
+def preferCreate():
+    path = os.getcwd()
+    path_anime = os.path.join(path, "AnimeDownloads")
+    if not os.path.exists(path_anime):
+        print("DOWNLOADS DIRECTORY NOT EXIST CANNOT GET LAST ANIME DOWNLOADS")
+    else:
+        print(path)
+        files = os.listdir(path_anime)
+        arrayTitle = []
+        for anime in files:
+            if '.mp4' in anime:
+                print(anime)
+                title = anime.split(" ")
+                if title[0] not in arrayTitle:
+                    arrayTitle.append(title[0])
+                print(arrayTitle)
+        print ("Files: " + str(files))
+        return arrayTitle
+    
+
+
 if __name__ == "__main__":
 
     ## CREATION OF SESSION VARIABLES
     if 'name' not in st.session_state:
         st.session_state['name'] = 'value'
+    if 'last_view' not in st.session_state:
+        st.session_state['last_view'] = 'value'
     if 'start' not in st.session_state:
         st.session_state['start'] = 'value'
     if 'end' not in st.session_state:
@@ -70,7 +95,8 @@ if __name__ == "__main__":
     ## CREATION OF WIDGETS WHERE THE CARDS WILL BE DISPLAYED
     cardCol1, cardCol2, cardCol3, cardCol4 = st._bottom.columns(4)
     cards = [cardCol1, cardCol2, cardCol3, cardCol4]
-
+    if 'checkSelect' not in st.session_state:
+        st.session_state.checkSelect = False
     ## FUCNTION MAIN
     def main():
         
@@ -89,21 +115,36 @@ if __name__ == "__main__":
         print(ArrayButtons)
 
         ## HEADER
+        
         with st.container():
             st.title("ProjectAnime")
             st.write("Benvenuto, Inserisci il titolo di un anime e gli episodi che vuoi scaricare")
-
+        header = st.columns((0.3,1,0.3,1))
+        with header[0]:
+            st.session_state['last_view'] = st.selectbox("Ultimi anime visti: ", preferCreate(), on_change=setName())
+            if(st.session_state['last_view'] == []):
+                st.session_state.checkSelect = False
+        with header[1]:
+            st.text("")
+            st.text("")
+            st.session_state.startFirst = st.checkbox('Avviare la prima puntata al finire del download?')
         ## FORM FOR GET ANIME NAME AND WHICH EPISODES DOWNLOAD
         st.markdown("<style> button[kind = 'secondary']{display: block; margin-left: auto; margin-right: auto}</style>", unsafe_allow_html=True)
         ##st.markdown('<p style ="color: black; font-size: 30px; font-weight: bold; font-family: sans serif;"> Title: </p>', unsafe_allow_html=True)
         col1 = st.container()
         with col1:
-                name = st.text_input(
+                st.session_state.name_input = st.text_input(
                     'Title:',
-                    placeholder="Inserisci titolo...",
+                    placeholder="Inserisci titolo se non hai selezionato un'anime tra gli ultimi visti...",
                 )
-                st.session_state['name'] = name
-                EpSlider(col1)
+                if(st.session_state.name_input != st.session_state['name'] and st.session_state['name'] != 'value' and st.session_state.name_input != ''):
+                    print('NAME UGUALE A ' + str(st.session_state.name_input))
+                    st.session_state.checkSelect = False
+                if(st.session_state.checkSelect == False):
+                    st.session_state['name'] = st.session_state.name_input
+                if(st.session_state['name'] != None):
+                    print ("NAME E IN IF CALL EPSLIDER " + str(st.session_state['name']))
+                    EpSlider(col1)
         button = st.button("Invia", type="primary")
         if button: 
             getAnimeInfo(cardCol1, cardCol2, cardCol3, cardCol4, ArrayButtons)
@@ -201,10 +242,12 @@ if __name__ == "__main__":
                         textB = st.session_state[f'B{i}'].getText()
                         print(textB)
                         if st.button(fr'{textB}'):
-                            st.write(startFunc(st.session_state[f'B{i}'].getPath(), st.session_state[f'B{i}'].getName()))
-                        
+                            st.write(startFunc(st.session_state[f'B{i}'].getPath(), st.session_state[f'B{i}'].getName()))    
                         print("ENTRATO IF1 NOT BUTTON")
                         print(path)
+                        print("VALORE CHECKBOX FIRST DOWNLOAD: " + str(st.session_state.startFirst))
+                        if(st.session_state.startFirst == True):
+                            startFunc(st.session_state['B0'].getPath(), st.session_state['B0'].getName())
                     else:
                         st.session_state[f'B{i}'] = _arrayB[i]
                         textB = st.session_state[f'B{i}'].getText()
@@ -284,9 +327,11 @@ if __name__ == "__main__":
             return
         print(anime_info)
         Anime = aw.Anime(anime_info[0]['link'])
-        directory = "C:/ProjectAnimeDownloads"
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        current_path = os.getcwd()
+        path_dir = os.path.join(current_path, "AnimeDownloads")
+        if not os.path.exists(path_dir):
+            os.makedirs(path_dir)
             print("Directory created successfully!")
         else:
             print("Directory already exists!")   
@@ -297,13 +342,13 @@ if __name__ == "__main__":
     ## FUNCTION FOR CREATE SLIDERS FOR EPISODE SELECTION
     def EpSlider(col1):
         if(st.session_state['name'] != 'value' and st.session_state['name'] != ''):
-            print('Valore di name e ' + st.session_state['name'])   
+            print('Valore di name e ' + str(st.session_state['name']))   
             anime_info = aw.find(st.session_state['name'])
             print('FUNZIONE ANIMEWORLD RITORNO: ' + str(anime_info))
             if(anime_info == []):
                 st.write("Anime con quel nome non esistente")
                 return
-            print("EPISODTI MASSIMI ANIME: " + str(anime_info[0]['episodes']))
+            print("EPISODI MASSIMI ANIME: " + str(anime_info[0]['episodes']))
             max_episodes = anime_info[0]['episodes']
             max_episodes = int(max_episodes)
             if "maxEp" not in st.session_state:
@@ -320,8 +365,9 @@ if __name__ == "__main__":
     ## FUNCTION THAT BUTTONS CALLS TO START ANIME MP4 
     def startFunc(path, name):
         print("PATH BUTTON INSIDE START METHOD:" + path)
-        print("AVVIATO FILE " + path)
-        startfile(Path.joinpath(Path.cwd(), path))
+        path = Path.joinpath(Path.cwd(), path)
+        startfile(path)
+        print("AVVIATO FILE " + str(path))
         return fr'Avviato file {name}'
    
 
@@ -335,6 +381,13 @@ if __name__ == "__main__":
     def setEnd():
         st.session_state['end'] = st.session_state.sliderA
         print("END: " + str(st.session_state['end']))
+        return
+
+    def setName():
+        st.session_state.checkSelect = True
+        st.session_state['name'] = st.session_state['last_view']
+        print("NAME IN FUNCTION SETNAME " + str(st.session_state['name']))
+        print('test')
         return
     
 
