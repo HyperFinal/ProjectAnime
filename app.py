@@ -8,10 +8,7 @@ from startfile import startfile
 from pathlib import Path
 from PIL import Image
 import re as rgx
-import cv2
-import socket
-import pickle
-import struct
+
 
 
 
