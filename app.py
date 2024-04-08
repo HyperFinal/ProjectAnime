@@ -8,6 +8,10 @@ from startfile import startfile
 from pathlib import Path
 from PIL import Image
 import re as rgx
+import cv2
+import socket
+import pickle
+import struct
 
 
 
@@ -169,7 +173,7 @@ if __name__ == "__main__":
                     if(st.session_state['name'] != 'value'):
                         last_ep = EpDict[st.session_state['name']]
                         EpSlider2(col1, last_ep)
-        button = st.button("Download", type="primary")
+        button = st.button("Download", type='primary')
         if button: 
             getAnimeInfo(cardCol1, cardCol2, cardCol3, cardCol4, ArrayButtons)
 
@@ -450,7 +454,5 @@ if __name__ == "__main__":
     def CreateSelect():
         print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL " + str(st.session_state.disable))
         return st.selectbox("Ultimi anime visti: ", preferCreate(), on_change=setName(), disabled=st.session_state.disable)
-        
-
-        
+ 
     main()
