@@ -76,6 +76,10 @@ if __name__ == "__main__":
         st.session_state.sliderA = 0
     if "sliderDA" not in st.session_state:
         st.session_state.sliderDA = 0
+    if "sliderA2" not in st.session_state:
+        st.session_state.sliderA2 = 0
+    if "sliderDA2" not in st.session_state:
+        st.session_state.sliderDA2 = 0  
     else: ## ELSE FOR SET THE SLIDER 'TO' WITH THE VALUE OF SLIDER 'FROM' ON EACH CHANGE
         if(st.session_state.sliderDA != 0):
             if(st.session_state.sliderA < st.session_state.sliderDA):
@@ -407,11 +411,11 @@ if __name__ == "__main__":
             with col1.container():
                 print("LAST EP UGUALE A " + str(last_ep))
                 ep = int(last_ep)
-                st.slider(label='DA', min_value=0, value= ep, max_value=max_episodes, step=1,format=None, key = 'sliderDA2', on_change=setStart())
+                st.slider(label='DA', min_value=0, value= ep, max_value=max_episodes, step=1,format=None, key = 'sliderDA2', on_change=setStart2())
                 ##print("VALORE SLIDER DA " + str(sliderDA))
             with col1.container():
                 print('CREATION SLIDER A EPSL2')
-                st.slider(label='A', min_value=0, value= ep+3, max_value=max_episodes, step=1,format=None, key = 'sliderA2', on_change=setStart())
+                st.slider(label='A', min_value=0, value= ep+3, max_value=max_episodes, step=1,format=None, key = 'sliderA2', on_change=setEnd2())
         else:
             print('ELSE valore di name e value')
         return
@@ -435,6 +439,17 @@ if __name__ == "__main__":
     ## FUNCTION THAT SET THE EPISODE FROM WHERE END TO DOWNLOAD (RETRIVE FROM THE SLIDER)
     def setEnd():
         st.session_state['end'] = st.session_state.sliderA
+        print("END: " + str(st.session_state['end']))
+        return
+    
+    def setStart2():
+        st.session_state['start'] = st.session_state.sliderDA2
+        print("START: " + str(st.session_state['start']))
+        return
+
+    ## FUNCTION THAT SET THE EPISODE FROM WHERE END TO DOWNLOAD (RETRIVE FROM THE SLIDER)
+    def setEnd2():
+        st.session_state['end'] = st.session_state.sliderA2
         print("END: " + str(st.session_state['end']))
         return
     
