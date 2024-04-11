@@ -44,9 +44,12 @@ def preferCreate():
                 print("NOME ANIME PREFER: " + info[0])
                 if(info[0] in EpDict.keys()):
                     temp_ep = info[1]
-                    if(EpDict[info[0]] < temp_ep):
+                    if(int(EpDict[info[0]]) < int(temp_ep)):
+                        print("VALORE DICT KEY: " + str(EpDict[info[0]]))
+                        print("STRINGA TEST EP PREFERITI IF " + str(info[1]))
                         EpDict[info[0]] = temp_ep
                 else:
+                    print("STRINGA TEST EP PREFERITI ELSE " + str(info[1]))
                     EpDict[info[0]] = info[1]
                 title = info[0]
                 if title not in arrayTitle:
@@ -398,10 +401,8 @@ if __name__ == "__main__":
         if(st.session_state['name'] != 'value' and st.session_state['name'] != ''):
             print('Valore di name e ' + str(st.session_state['name']))   
             anime_info = aw.find(st.session_state['name'])
-            print('FUNZIONE ANIMEWORLD RITORNO: ' + str(anime_info))
-            if(anime_info == []):
-                st.write("Anime con quel nome non esistente")
-                return
+            print("ANIME INFO IN EPSLIDER2 " + str(anime_info))
+            ##print('FUNZIONE ANIMEWORLD RITORNO: ' + str(anime_info))
             print("EPISODI MASSIMI ANIME: " + str(anime_info[0]['episodes']))
             max_episodes = anime_info[0]['episodes']
             max_episodes = int(max_episodes)
